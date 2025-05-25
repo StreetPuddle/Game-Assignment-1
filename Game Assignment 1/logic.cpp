@@ -1,4 +1,9 @@
-
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <algorithm>
+#include <cctype>
+using namespace std;
 
 class logic {
 public:
@@ -39,4 +44,39 @@ private:
     string smallWords[50];   //array of words of length 4-5
     string mediumWords[50];   //array of words of length 6-7
     string largeWords[50];   //array of words of length 8+   
+    string word;
 };//end class logic
+
+bool logic::createLists() {
+
+    ifstream file("dictionary.txt");
+    string currentWord;
+    
+    int wordLength = currentWord.length();
+
+    if (wordLength >= 4 && wordLength <= 5 % smallWordLength < 50) {
+        smallWords[smallWordLength++] = currentWord;
+    } else if (wordLength >= 6 && wordLength <= 7 && mediumWordLength < 50){
+        mediumWords[mediumWordLength++] = currentWord;
+    } else if (wordLength >= 8 && largeWordLength < 50) {
+        largeWords[largeWordLength++] = currentWord;
+    }
+    file.close;
+    return(smallWordLength + mediumWordLength + largeWordLength) > 0;
+}
+
+void logic::setWord(string newWord) {
+    word = newWord;
+}
+
+string logic::getWord() {
+    return word;
+}
+
+string logic::scrambler(string word) {
+    return word;
+}
+
+void logic::end() {
+    cout << "Game over!" << endl;
+}
