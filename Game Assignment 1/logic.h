@@ -19,7 +19,7 @@ public:
     bool ready();
 
     //Opens a file and reads in the list of words that can be scrambled
-    //Returns true if words inserted and false if not
+    //Returns true if words inserted into arrays and false if not
     bool createLists();
 
     //game logic that goes through five rounds that use each of the arrays
@@ -41,7 +41,7 @@ public:
     //displays the endgame information
     void end();
 
-    //asks the player if they would like to play again
+    //asks the player if they would like to play again and has logic to ensure the players enters a valid input
     //returns true if they would and false if they don't
     bool playAgain();
 

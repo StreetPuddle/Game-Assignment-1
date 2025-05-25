@@ -34,7 +34,7 @@ bool logic::ready() {
 
         if (response == "Y" || response == "y") {
             return true;
-        } else if (response == "N" || response == "n") {
+        } else if (response == "N" || response == "n") {//ensures the game will wait until the player is ready
             cout << "Well...";
         } else {
             cout << "Invalid input.";
@@ -44,6 +44,7 @@ bool logic::ready() {
 
 
 //reads in txt file to create 3 arrays of words of different lengths adn allocated each word accordingly
+//return a true if the arrays have been filled and false if they haven't
 bool logic::createLists() {
 
     ifstream file("dictionary.txt");
@@ -149,7 +150,7 @@ string logic::scrambler(string word) {
 
     for (int i = n - 1; i > 0; i--) {
         int j = rand() % (i + 1);
-        swap(scrambled[i], scrambled[j]);
+        swap(scrambled[i], scrambled[j]);//swaps chars based on index, one being loop based and the other is rng selected
     }
     return scrambled;
 }
@@ -198,7 +199,7 @@ bool logic::playAgain() {
             return false;
         }
         else {
-            cout << "Invalid input.";
+            cout << "Invalid input.";//ensures the player enters a valid input
         }
     }
 }
