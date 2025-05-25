@@ -14,7 +14,6 @@ public:
     //Provides a basic introduction to the user
     void introduction();
 
-
     //checks if the player is ready to player after reading the intro
     //returns true if the player is ready and no option for false
     bool ready();

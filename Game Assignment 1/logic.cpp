@@ -43,7 +43,7 @@ bool logic::ready() {
 }
 
 
-//reads in txt file to create 3 arrays of words of different lengths
+//reads in txt file to create 3 arrays of words of different lengths adn allocated each word accordingly
 bool logic::createLists() {
 
     ifstream file("dictionary.txt");
@@ -123,9 +123,6 @@ void logic::playGame() {
 //returns a random word from the small array
 string logic::randomSmallArray() {
 
-    if (smallWordLength == 0) {
-        return "";
-    }
     int index = rand() % smallWordLength;
     return smallWords[index];
 }
@@ -133,9 +130,6 @@ string logic::randomSmallArray() {
 //returns a random word from the medium array
 string logic::randomMediumArray() {
 
-    if (mediumWordLength == 0) {
-        return "";
-    }
     int index = rand() % mediumWordLength;
     return mediumWords[index];
 }
@@ -143,9 +137,6 @@ string logic::randomMediumArray() {
 //returns a random word from the large array
 string logic::randomLargeArray() {
 
-    if (largeWordLength == 0) {
-        return "";
-    }
     int index = rand() % largeWordLength;
     return largeWords[index];
 }
@@ -189,7 +180,6 @@ void logic::end() {
         break;
     }
 }
-
 
 //ask the player if they would like to play another round
 bool logic::playAgain() {
