@@ -1,62 +1,14 @@
 #include <iostream>
 #include <fstream>
-#include <string>
+#include "logic.h"
 #include <algorithm>
-#include <cctype>
+#include <ctime>
+#include <cstdlib>
 #include <random>
+
 using namespace std;
 
-class logic {
-public:
-
-    //constructor
-    logic();
-    
-    //Provides a basic introduction to the user
-    void introduction();
-    
-    //Opens a file and reads in the list of words that can be scrambled
-    //Returns: true if words inserted and false if not
-    bool createLists();
-    
-    //void setword will update the private variable word with an input from main program
-    bool playGame();
-    
-    //getWord takes the word from private variable and returns to main program
-    // @return a string
-    void setWord(string newWord);
-    
-    //Carries out the actual word scrambling
-    //Returns: true if user wins and false if not
-    string getWord();
-
-    //returns a word from the first array
-    string randomSmallArray();
-
-    //returns a word from the second array
-    string randomMediumArray();
-
-    //returns a word from the third array
-    string randomLargeArray();
-    
-    //Takes in a word and scrambles it
-    //Returns a scrambled version of the parameter
-    string scrambler(string word);
-    
-    //Displays the endgame information
-    void end();
-    
-private:
-    int numCorrect,             //the number of correct words
-        smallWordLength,       //length of word arrays
-        mediumWordLength,
-        largeWordLength;
-    string smallWords[50];   //array of words of length 4-5
-    string mediumWords[50];   //array of words of length 6-7
-    string largeWords[50];   //array of words of length 8+   
-    string word;
-};//end class logic
-
+//constructor
 logic::logic() {
     numCorrect = 0;
     smallWordLength = 0;
@@ -64,9 +16,30 @@ logic::logic() {
     largeWordLength = 0;
     word = "";
 }
-void introduction() {
-    cout << "UNSCRAMBLRRR\nThe goal of the game is to unscramble a word before the clock runs out!";
+
+
+void logic::introduction() {
+    cout << "UNSCRAMBLRRR\nThe goal of the game is to unscramble a word before the clock runs out!\n" << endl;
 }
+
+bool logic::ready() {
+    string response;
+
+    while (true) {
+        cout << "Are you ready now? Y or N?\nResonse: ";
+        cin >> response;
+        cout << "\n";
+
+        if (response == "Y" || response == "y") {
+            return true;
+        } else if (response == "N" || response == "n") {
+            cout << "Well...";
+        } else {
+            cout << "Invalid input.";
+        }
+    }
+}
+
 bool logic::createLists() {
 
     ifstream file("dictionary.txt");
@@ -79,7 +52,7 @@ bool logic::createLists() {
 
         int wordLength = currentWord.length();
 
-        if (wordLength >= 4 && wordLength <= 5 % smallWordLength < 50) {
+        if (wordLength >= 4 && wordLength <= 5 && smallWordLength < 50) {
             smallWords[smallWordLength++] = currentWord;
         } else if (wordLength >= 6 && wordLength <= 7 && mediumWordLength < 50) {
             mediumWords[mediumWordLength++] = currentWord;
@@ -107,8 +80,9 @@ bool logic::playGame() {
             cout << "You guessed right!\n";
             numCorrect++;
         } else {
-            cout << "Ya guessed wrongggg...\nThe word was: %d\n", original;
+            cout << "Ya guessed wrongggg...\nThe word was: " << original << "\n";
         }
+        scrambled = "";
     }
 
     for (int i = 0; i < 2; i++) {
@@ -122,7 +96,7 @@ bool logic::playGame() {
             cout << "You guessed right!\n";
             numCorrect++;
         } else {
-            cout << "Ya guessed wrongggg...\nThe word was: %d\n", original;
+            cout << "Ya guessed wrongggg...\nThe word was: " << original << "\n";
         }
     }
 
@@ -136,7 +110,7 @@ bool logic::playGame() {
         cout << "You guessed right!\n";
         numCorrect++;
     } else {
-        cout << "Ya guessed wrongggg...\nThe word was: %d\n", original;
+        cout << "Ya guessed wrongggg...\nThe word was: " << original << "\n";
     }
 
     return numCorrect == 5;
@@ -151,6 +125,7 @@ string logic::getWord() {
 }
 
 string logic::randomSmallArray() {
+
     if (smallWordLength == 0) {
         return "";
     }
@@ -159,6 +134,7 @@ string logic::randomSmallArray() {
 }
 
 string logic::randomMediumArray() {
+
     if (mediumWordLength == 0) {
         return "";
     }
@@ -167,6 +143,7 @@ string logic::randomMediumArray() {
 }
 
 string logic::randomLargeArray() {
+
     if (largeWordLength == 0) {
         return "";
     }
@@ -177,14 +154,12 @@ string logic::randomLargeArray() {
 string logic::scrambler(string word) {
 
     string scrambled = word;
-    srand(time(0));
     int n = scrambled.length();
 
     for (int i = n - 1; i > 0; i--) {
         int j = rand() % (i + 1);
         swap(scrambled[i], scrambled[j]);
     }
-
     return scrambled;
 }
 
@@ -212,5 +187,5 @@ void logic::end() {
         cout << "Yikes... diagnosis says you got a smooth brain!" << endl;
         break;
     }
-    cout << "C ya" << endl;
+    cout << "Thank you for playing my game! C ya!" << endl;
 }
