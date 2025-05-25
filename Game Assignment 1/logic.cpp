@@ -17,11 +17,13 @@ logic::logic() {
     word = "";
 }
 
-
+//introduces the player to the game and explains how to play
 void logic::introduction() {
     cout << "UNSCRAMBLRRR\nThe goal of the game is to unscramble a word before the clock runs out!\n" << endl;
 }
 
+
+//checks if the player is ready to play and doesn't continue utill they're ready
 bool logic::ready() {
     string response;
 
@@ -40,6 +42,8 @@ bool logic::ready() {
     }
 }
 
+
+//reads in txt file to create 3 arrays of words of different lengths
 bool logic::createLists() {
 
     ifstream file("dictionary.txt");
@@ -64,7 +68,8 @@ bool logic::createLists() {
     return(smallWordLength + mediumWordLength + largeWordLength) > 0;
 }
 
-bool logic::playGame() {
+//game logic that goes through five rounds that use each of the arrays
+void logic::playGame() {
 
     numCorrect = 0;
     string original, scrambled, guess;
@@ -77,10 +82,10 @@ bool logic::playGame() {
         cin >> guess;
 
         if (guess == original) {
-            cout << "You guessed right!\n";
+            cout << "You guessed right!\n\n";
             numCorrect++;
         } else {
-            cout << "Ya guessed wrongggg...\nThe word was: " << original << "\n";
+            cout << "Ya guessed wrongggg...\nThe word was: " << original << "\n\n";
         }
         scrambled = "";
     }
@@ -93,10 +98,10 @@ bool logic::playGame() {
         cin >> guess;
 
         if (guess == original) {
-            cout << "You guessed right!\n";
+            cout << "You guessed right!\n\n";
             numCorrect++;
         } else {
-            cout << "Ya guessed wrongggg...\nThe word was: " << original << "\n";
+            cout << "Ya guessed wrongggg...\nThe word was: " << original << "\n\n";
         }
     }
 
@@ -107,23 +112,15 @@ bool logic::playGame() {
     cin >> guess;
 
     if (guess == original) {
-        cout << "You guessed right!\n";
+        cout << "You guessed right!\n\n";
         numCorrect++;
     } else {
-        cout << "Ya guessed wrongggg...\nThe word was: " << original << "\n";
+        cout << "Ya guessed wrongggg...\nThe word was: " << original << "\n\n";
     }
-
-    return numCorrect == 5;
 }
 
-void logic::setWord(string newWord) {
-    word = newWord;
-}
 
-string logic::getWord() {
-    return word;
-}
-
+//returns a random word from the small array
 string logic::randomSmallArray() {
 
     if (smallWordLength == 0) {
@@ -133,6 +130,7 @@ string logic::randomSmallArray() {
     return smallWords[index];
 }
 
+//returns a random word from the medium array
 string logic::randomMediumArray() {
 
     if (mediumWordLength == 0) {
@@ -142,6 +140,7 @@ string logic::randomMediumArray() {
     return mediumWords[index];
 }
 
+//returns a random word from the large array
 string logic::randomLargeArray() {
 
     if (largeWordLength == 0) {
@@ -151,6 +150,7 @@ string logic::randomLargeArray() {
     return largeWords[index];
 }
 
+//scrables the word passed into the function then returns it
 string logic::scrambler(string word) {
 
     string scrambled = word;
@@ -163,29 +163,52 @@ string logic::scrambler(string word) {
     return scrambled;
 }
 
+//tells the player they reached the end of the game and tells them they're rating
 void logic::end() {
     cout << "Game over!" << endl;
     cout << "Score: " << numCorrect << "/5\n" << endl;
 
     switch (numCorrect) {
     case 5:
-        cout << "Absolutely bonkers, you're a mad lad." << endl;
+        cout << "Absolutely bonkers, you're a mad lad.\n" << endl;
         break;
     case 4:
-        cout << "Wow, almost perfect!" << endl;
+        cout << "Wow, almost perfect!\n" << endl;
         break;
     case 3:
-        cout << "Not bad, there's certainly room for improvement!" << endl;
+        cout << "Not bad, there's certainly room for improvement!\n" << endl;
         break;
     case 2:
-        cout << "You did your best... that's all that matters!" << endl;
+        cout << "You did your best... that's all that matters!\n" << endl;
         break;
     case 1:
-        cout << "Are... you testing out what happens if you get only one right?" << endl;
+        cout << "Are... you testing out what happens if you get only one right?\n" << endl;
         break;
     case 0:
-        cout << "Yikes... diagnosis says you got a smooth brain!" << endl;
+        cout << "Yikes... diagnosis says you got a smooth brain!\n" << endl;
         break;
     }
-    cout << "Thank you for playing my game! C ya!" << endl;
+}
+
+
+//ask the player if they would like to play another round
+bool logic::playAgain() {
+    string response;
+
+    while (true) {
+        cout << "Would you like to play again? Y or N?\nResonse: ";
+        cin >> response;
+        cout << "\n";
+
+        if (response == "Y" || response == "y") {
+            return true;
+        }
+        else if (response == "N" || response == "n") {
+            cout << "Thank you for playing my game, c ya!" << endl;
+            return false;
+        }
+        else {
+            cout << "Invalid input.";
+        }
+    }
 }
