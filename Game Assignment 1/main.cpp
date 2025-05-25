@@ -17,6 +17,7 @@ int main() {
 	//read the file into game.readFile()
 	game.setWord("Frank");
 	cout << game.getWord() << endl;
+	srand(time(0));
 
 	ALLEGRO_THREAD* create1 = NULL, * create2 = NULL;
 	create1 = al_create_thread(input, NULL);

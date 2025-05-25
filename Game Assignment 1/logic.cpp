@@ -3,6 +3,8 @@
 #include <string>
 #include <algorithm>
 #include <cctype>
+#include <random>
+#include <algorithm>
 using namespace std;
 
 class logic {
@@ -47,21 +49,37 @@ private:
     string word;
 };//end class logic
 
+logic::logic() {
+    numCorrect = 0;
+    smallWordLength = 0;
+    mediumWordLength = 0;
+    largeWordLength = 0;
+    word = "";
+}
+void introduction() {
+    cout << "UNSCRAMBLRRR\nThe goal of the game is to unscramble a word before the clock runs out!";
+}
 bool logic::createLists() {
 
     ifstream file("dictionary.txt");
+    smallWordLength = 0;
+    mediumWordLength = 0;
+    largeWordLength = 0;
     string currentWord;
     
-    int wordLength = currentWord.length();
+    while (file >> currentWord) {
 
-    if (wordLength >= 4 && wordLength <= 5 % smallWordLength < 50) {
-        smallWords[smallWordLength++] = currentWord;
-    } else if (wordLength >= 6 && wordLength <= 7 && mediumWordLength < 50){
-        mediumWords[mediumWordLength++] = currentWord;
-    } else if (wordLength >= 8 && largeWordLength < 50) {
-        largeWords[largeWordLength++] = currentWord;
+        int wordLength = currentWord.length();
+
+        if (wordLength >= 4 && wordLength <= 5 % smallWordLength < 50) {
+            smallWords[smallWordLength++] = currentWord;
+        } else if (wordLength >= 6 && wordLength <= 7 && mediumWordLength < 50) {
+            mediumWords[mediumWordLength++] = currentWord;
+        } else if (wordLength >= 8 && largeWordLength < 50) {
+            largeWords[largeWordLength++] = currentWord;
+        }
     }
-    file.close;
+    file.close();
     return(smallWordLength + mediumWordLength + largeWordLength) > 0;
 }
 
@@ -74,7 +92,17 @@ string logic::getWord() {
 }
 
 string logic::scrambler(string word) {
-    return word;
+
+    string scrambled = word;
+    srand(time(0));
+    int n = scrambled.length();
+
+    for (int i = n - 1; i > 0; --i) {
+        int j = rand() % (i + 1);
+        swap(scrambled[i], scrambled[j]);
+    }
+
+    return scrambled;
 }
 
 void logic::end() {
