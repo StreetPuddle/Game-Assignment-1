@@ -19,7 +19,7 @@ logic::logic() {
 
 //introduces the player to the game and explains how to play
 void logic::introduction() {
-    cout << "UNSCRAMBLRRR\nThe goal of the game is to unscramble a word before the clock runs out!\n" << endl;
+    cout << "UNSCRAMBLRRR\nThe goal of the game is to unscramble 5 words before the clock runs out!\n" << endl;
 }
 
 
